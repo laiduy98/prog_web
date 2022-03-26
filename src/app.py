@@ -4,21 +4,22 @@ import numpy as np
 import pandas as pd
 
 from side_bar import user_input_features
-from data_visulization import ziu_pretty
+from data_visulization import data_visulization
 from clean import data_clean
 
 # st.image('')
 
 st.write('''
 # Programmation web project
-## Project
+##### This is a web application for visualising existing datasets, exploratory data analysis and training of different models.
 ''')
 
 side_bar_input = user_input_features()
 
-st.write(side_bar_input)
+#st.write(side_bar_input)
+if side_bar_input is not None:
+    data_visulization_output = data_visulization(side_bar_input)
 
-zilu_output = ziu_pretty(side_bar_input)
 
 # duy_output = duy_fuction(zilu_output)
 #

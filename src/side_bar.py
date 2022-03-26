@@ -2,11 +2,10 @@ import streamlit as st
 import pandas as pd
 import warnings
 
+dict = {}
 
 def user_input_features():
     warnings.filterwarnings("ignore")
-
-    dict = {}
 
     # 1st upload the file:
 
@@ -16,15 +15,16 @@ def user_input_features():
     try:
         # csv
         df = pd.read_csv(file, sep=",", header=None)
-        st.write(df)
+        #st.write(df)
         if df is not None:
             num_Column = df.shape[1]
             st.write("the number of columns is : ", num_Column)
+            st.write("Please name each column on the left, or you can use the default name")
             column_name = []
             i = 1
 
             while i <= num_Column:
-                name = st.sidebar.text_input(f"Enter the name of column {i}", "")
+                name = st.sidebar.text_input(f"Enter the name of column {i}", f"default {i}")
                 if name is not None:
                     column_name.append(name)
                     empty = False
@@ -39,7 +39,9 @@ def user_input_features():
             df = df.set_axis(column_name, axis=1)
             dict["data"] = df
 
+
         if doneBT:
+            """
             try:
                 st.write(df)
             except:
@@ -47,6 +49,7 @@ def user_input_features():
                     st.error("Error: you didn't name your columns!")
                 else:
                     st.error("Error: You gave the same name for two columns!")
+            """
             st.sidebar.markdown(f"<h4 style='text-align: center; color: #0556FD;'>select the model(s)</h4>",
                                 unsafe_allow_html=True)
             LR = st.sidebar.checkbox("Logistic regression")
@@ -96,10 +99,10 @@ def user_input_features():
                 f"<h4 style='text-align: center; color: #0556FD;'>select the quantitative variables</h4>",
                 unsafe_allow_html=True)
             quantitative_var = st.sidebar.multiselect("Select quantitative variables", column_name)
-            dict["quantitative_variables"] = qualitative_var
+            dict["quantitative_variables"] = quantitative_var
 
-            if st.sidebar.button("show me the result!"):
-                return dict
+            #if st.sidebar.button("show me the result!"):
+            return dict
 
     except ValueError:
         st.write("no file was assigned")
