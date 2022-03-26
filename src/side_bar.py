@@ -100,7 +100,6 @@ def user_input_features():
 
             if st.sidebar.button("show me the result!"):
                 return dict
-                st.write
 
     except ValueError:
         st.write("no file was assigned")
