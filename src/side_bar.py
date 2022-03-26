@@ -9,7 +9,7 @@ def user_input_features():
 
     # 1st upload the file:
 
-    file = st.sidebar.file_uploader("Upload a DATA file: ")
+    file = st.sidebar.file_uploader("Upload a data file: ")
     empty = True
 
     try:
@@ -18,7 +18,7 @@ def user_input_features():
         #st.write(df)
         if df is not None:
             num_Column = df.shape[1]
-            st.write("the number of columns is : ", num_Column)
+            st.write("The number of columns is : ", num_Column)
             st.write("Please name each column on the left, or you can use the default name")
             column_name = []
             i = 1
@@ -33,7 +33,7 @@ def user_input_features():
                 doneBT = st.sidebar.checkbox("Done!")
 
             st.markdown("<hr/>", unsafe_allow_html=True)
-            st.sidebar.markdown(f"<h5 style='text-align: center; color: #0556FD;'>Your Columns: </h5>",
+            st.sidebar.markdown(f"<h5 style='text-align: center; color: #0556FD;'>Your columns: </h5>",
                                 unsafe_allow_html=True)
             st.sidebar.text(column_name)
             df = df.set_axis(column_name, axis=1)
@@ -50,11 +50,11 @@ def user_input_features():
                 else:
                     st.error("Error: You gave the same name for two columns!")
             """
-            st.sidebar.markdown(f"<h4 style='text-align: center; color: #0556FD;'>select the model(s)</h4>",
+            st.sidebar.markdown(f"<h4 style='text-align: center; color: #0556FD;'>Select the model(s)</h4>",
                                 unsafe_allow_html=True)
             LR = st.sidebar.checkbox("Logistic regression")
             SVM = st.sidebar.checkbox("SVM")
-            DT = st.sidebar.checkbox("Decision Tree ")
+            DT = st.sidebar.checkbox("Decision Tree")
 
             if LR:
                 dict['logistic_regression'] = True
@@ -72,23 +72,23 @@ def user_input_features():
                 dict['decision_tree'] = False
 
             # choose input
-            st.sidebar.markdown(f"<h4 style='text-align: center; color: #0556FD;'>select Your feature(s)</h4>",
+            st.sidebar.markdown(f"<h4 style='text-align: center; color: #0556FD;'>Select your feature(s)</h4>",
                                 unsafe_allow_html=True)
 
             features = st.sidebar.multiselect("Select your Inputs", column_name)
             dict['features'] = features
 
             # choose output
-            st.sidebar.markdown(f"<h4 style='text-align: center; color: #0556FD;'>select Your Output</h4>",
+            st.sidebar.markdown(f"<h4 style='text-align: center; color: #0556FD;'>select your Output</h4>",
                                 unsafe_allow_html=True)
 
-            outputs = st.sidebar.selectbox("Select your Output", column_name)
+            outputs = st.sidebar.selectbox("Select your output", column_name)
             # st.sidebar.write(value)
             dict['outputs'] = outputs
 
             # qualitative variables
             st.sidebar.markdown(
-                f"<h4 style='text-align: center; color: #0556FD;'>select the qualitative variables</h4>",
+                f"<h4 style='text-align: center; color: #0556FD;'>Select qualitative variables</h4>",
                 unsafe_allow_html=True)
 
             qualitative_var = st.sidebar.multiselect("Select qualitative variables", column_name)
@@ -96,7 +96,7 @@ def user_input_features():
 
             # quantitive vars
             st.sidebar.markdown(
-                f"<h4 style='text-align: center; color: #0556FD;'>select the quantitative variables</h4>",
+                f"<h4 style='text-align: center; color: #0556FD;'>Select quantitative variables</h4>",
                 unsafe_allow_html=True)
             quantitative_var = st.sidebar.multiselect("Select quantitative variables", column_name)
             dict["quantitative_variables"] = quantitative_var
