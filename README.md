@@ -1,6 +1,6 @@
 # Programmation web project
 
-## Member
+## Members
 - Zilu YANG
 - LAI Khang Duy
 - Mariia Klimina
