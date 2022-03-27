@@ -34,7 +34,7 @@ def data_clean(side_bar_input):
             norm_type = st.radio('Choose the norm', ('l1', 'l2', 'max'))
             data_X = normalize(data_X, norm=norm_type)
 
-        st.write('Do you want apply feature scaling ?')
+        st.write('Do you want apply feature scaling (StandardScaler) ?')
         scaling_status = st.checkbox('Feature scaling')
         if scaling_status:
             scaler = StandardScaler()

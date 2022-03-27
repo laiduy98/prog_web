@@ -41,6 +41,21 @@ def test(data_file_name):
     #
     # st.pyplot(plt)
 
+
+def evaluation_step(results):
+    st.subheader("IV. Evaluation")
+
+
+
+    cm = confusion_matrix(results['y_test'], results['y_pred_logistic'], labels=results['y'])
+    disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=results['y'])
+    disp.plot()
+    # plt.show()
+    # print(clf.predict([[2, 1, 2, 3, 1, 3]]))
+
+    st.pyplot(plt)
+
+
 if __name__ == '__main__':
     data_file_path = '../data/dertamology/dermatology.data'
     # data_file_path = 'data/dertamology/dermatology.data'

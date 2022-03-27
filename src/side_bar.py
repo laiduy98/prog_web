@@ -21,7 +21,7 @@ def user_input_features():
         if data_df is not None:
 
             column_input_type = st.sidebar.radio('Choose input column name by file or type directly:',
-                                                 ('By input in the text field', 'By file'))
+                                                 ('By file', 'By input in the text field'))
 
             if column_input_type == 'By file':
                 column_file = st.sidebar.file_uploader("Upload a column file: ")

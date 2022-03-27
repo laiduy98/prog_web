@@ -1,44 +1,40 @@
-from sklearn import preprocessing
+from pathlib import Path
 import streamlit as st
-import numpy as np
-import pandas as pd
 
 from side_bar import user_input_features
 from data_visualization import data_visualization
 from clean import data_clean
-from models import models_select
+from models_2 import models_select
+from evaluation import evaluation_step
+import os
 
-# st.image('')
-
-st.write('''
-# Programmation web project
-##### This is a web application for visualising existing datasets, 
-exploratory data analysis and training of different models.
-''')
-
-side_bar_input = user_input_features()
-
-#st.write(side_bar_input)
-if side_bar_input is not None:
-    data_visualization(side_bar_input)
-
-cleaned_data = data_clean(side_bar_input)
-
-result = models_select(cleaned_data)
+dir_path = os.path.dirname(os.path.realpath(__file__))
 
 
+def main():
+    image_path = Path(dir_path)
+    print(image_path.parent.absolute())
+    # print(image_path.parent.absolute() + 'report/assets/images/uparis.png')
+    # st.image('../report/assets/images/uparis.png')
 
-# duy_output = duy_fuction(zilu_output)
-#
-# masha_out
+    st.write('''
+    # Programmation web project
+    ##### This is a web application for visualising existing datasets, 
+    exploratory data analysis and training of different models.
+    ''')
 
-# if side_bar_input['data_type'] == 'data':
-#      processed_data = data_clean(side_bar_input=side_bar_input)
-# else:
-#      processed_data = data_clean(side_bar_input=side_bar_input)
+    side_bar_input = user_input_features()
 
-# chart_data = pd.DataFrame(
-#      np.random.randn(20, 3),
-#      columns=['a', 'b', 'c'])
+    if side_bar_input is not None:
+        data_visualization(side_bar_input)
 
-# st.line_chart(chart_data)
+        cleaned_data = data_clean(side_bar_input)
+
+
+        result = models_select(cleaned_data)
+
+        # evaluation_step(result)
+
+
+if __name__ == '__main__':
+    main()
