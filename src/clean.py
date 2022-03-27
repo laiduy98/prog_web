@@ -41,7 +41,14 @@ def data_clean(side_bar_input):
             data_X = scaler.fit_transform(data_X)
 
         data_X = pd.DataFrame(data_X, columns=data_X_column)
-        st.write(data_X)
 
-        cleaned_input['data'] = data
+
+        # print(data_y)
+
+        data_X[cleaned_input['outputs']] = data_y
+
+        cleaned_data = data_X
+        st.write(cleaned_data)
+
+        cleaned_input['data'] = cleaned_data
     return cleaned_input
