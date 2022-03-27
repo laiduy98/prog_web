@@ -43,6 +43,7 @@ def models_select(cleaned_data):
         # The prediction output
         y_pred = regr.predict(X_test)
         st.write(y, y_pred)
+        st.write('test')
 
     '''elif dict['logistic_regression']==False and dict['svm']==True and dict['decision_tree']==False:
 
