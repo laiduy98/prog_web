@@ -73,6 +73,21 @@ def user_input_features():
                 else:
                     st.error("Error: You gave the same name for two columns!")
             """
+            # qualitative variables
+            st.sidebar.markdown(
+                f"<h4 style='text-align: center; color: #0556FD;'>Select qualitative variables</h4>",
+                unsafe_allow_html=True)
+
+            qualitative_var = st.sidebar.multiselect("Select qualitative variables", column_name)
+            input_dict["qualitative_variables"] = qualitative_var
+
+            # quantitive vars
+            st.sidebar.markdown(
+                f"<h4 style='text-align: center; color: #0556FD;'>Select quantitative variables</h4>",
+                unsafe_allow_html=True)
+            quantitative_var = st.sidebar.multiselect("Select quantitative variables", column_name)
+            input_dict["quantitative_variables"] = quantitative_var
+
             st.sidebar.markdown(f"<h4 style='text-align: center; color: #0556FD;'>Select the model(s)</h4>",
                                 unsafe_allow_html=True)
             LR = st.sidebar.checkbox("Logistic regression")
@@ -110,20 +125,7 @@ def user_input_features():
             # print(type(outputs))
             input_dict['outputs'] = outputs
 
-            # qualitative variables
-            st.sidebar.markdown(
-                f"<h4 style='text-align: center; color: #0556FD;'>Select qualitative variables</h4>",
-                unsafe_allow_html=True)
 
-            qualitative_var = st.sidebar.multiselect("Select qualitative variables", column_name)
-            input_dict["qualitative_variables"] = qualitative_var
-
-            # quantitive vars
-            st.sidebar.markdown(
-                f"<h4 style='text-align: center; color: #0556FD;'>Select quantitative variables</h4>",
-                unsafe_allow_html=True)
-            quantitative_var = st.sidebar.multiselect("Select quantitative variables", column_name)
-            input_dict["quantitative_variables"] = quantitative_var
 
             # if st.sidebar.button("show me the result!"):
             return input_dict
