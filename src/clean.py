@@ -14,13 +14,13 @@ def data_clean(side_bar_input):
         # st.dataframe(data)
 
         data = data.replace('?', np.nan)
-        st.write(data['Age (linear)'].isnull())
+        # st.write(data['Age (linear)'].isnull())
         # num_col_contain_nan = len(data.columns[data.isna().any()].tolist())
         # print(num_col_contain_nan)
         # st.write(num_col_contain_nan)
         nan_resolve_problem = st.radio('Choose way to solve NaN', ('Remove Nan', 'Replace with mean of column'))
-        st.write(nan_resolve_problem)
-        st.write(type(nan_resolve_problem))
+        # st.write(nan_resolve_problem)
+        # st.write(type(nan_resolve_problem))
 
         if nan_resolve_problem == 'Remove Nan':
             st.write('Choose the number of blank features before the rows is removed')

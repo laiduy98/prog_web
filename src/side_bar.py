@@ -93,7 +93,7 @@ def user_input_features():
             st.sidebar.markdown(f"<h4 style='text-align: center; color: #0556FD;'>Select your feature(s)</h4>",
                                 unsafe_allow_html=True)
 
-            features = st.sidebar.multiselect("Select your Inputs", column_name)
+            features = st.sidebar.multiselect("Select your inputs", column_name)
             input_dict['features'] = features
 
             # choose output

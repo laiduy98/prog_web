@@ -28,7 +28,6 @@ def main():
 
         cleaned_data = data_clean(side_bar_input)
 
-
         result = models_select(cleaned_data)
 
         evaluation_step(result)
