@@ -105,32 +105,37 @@ def evaluation_step(results):
             disp.plot()
             st.pyplot(plt)
 
-    st.write('### - ROC and AUC')
-    if 'y_pred_logistic_proba' in results:
-        st.write('### In the case of using logistic regression')
-        # st.write(results['y_test'].shape)
-        # st.write(results['y_pred_logistic'].shape)
-        roc_auc_logistic = roc_auc_score(results['y_test'], results['y_pred_logistic_proba'], multi_class='ovo',
-                                         average='weighted')
-        st.write(f'The roc_aur_score is {roc_auc_logistic}')
+    if 'y_pred_logistic_proba' in results or 'y_pred_svm_proba' in results or 'y_pred_tree_proba' in results:
+        if results['y_pred_logistic_proba'].shape[1] > 2 or \
+                results['y_pred_svm_proba'].shape[1] > 2 or \
+                results['y_pred_tree_proba'].shape[1] > 2:
+            st.write('### - ROC and AUC')
+            # st.radio('choose')
+            if 'y_pred_logistic_proba' in results:
+                st.write('### In the case of using logistic regression')
+                # st.write(results['y_test'])
+                # st.write(results['y_pred_logistic_proba'])
+                roc_auc_logistic = roc_auc_score(results['y_test'], results['y_pred_logistic_proba'], multi_class='ovo',
+                                                 average='weighted')
+                st.write(f'The roc_aur_score is {roc_auc_logistic}')
 
-    if 'y_pred_svm_proba' in results:
-        st.write('### In the case of using SVM')
-        # st.write(results['y_test'].shape)
-        # st.write(results['y_pred_logistic'].shape)
-        roc_auc_logistic = roc_auc_score(results['y_test'], results['y_pred_svm_proba'], multi_class='ovo',
-                                         average='weighted')
-        st.write(f'The roc_aur_score is {roc_auc_logistic}')
+            if 'y_pred_svm_proba' in results:
+                st.write('### In the case of using SVM')
+                # st.write(results['y_test'].shape)
+                # st.write(results['y_pred_logistic'].shape)
+                roc_auc_logistic = roc_auc_score(results['y_test'], results['y_pred_svm_proba'], multi_class='ovo',
+                                                 average='weighted')
+                st.write(f'The roc_aur_score is {roc_auc_logistic}')
 
-    if 'y_pred_tree_proba' in results:
-        st.write('### In the case of using decision tree')
-        # st.write(results['y_test'].shape)
-        # st.write(results['y_pred_logistic'].shape)
-        roc_auc_logistic = roc_auc_score(results['y_test'], results['y_pred_tree_proba'], multi_class='ovo',
-                                         average='weighted')
-        st.write(f'The roc_aur_score is {roc_auc_logistic}')
+            if 'y_pred_tree_proba' in results:
+                st.write('### In the case of using decision tree')
+                # st.write(results['y_test'].shape)
+                # st.write(results['y_pred_logistic'].shape)
+                roc_auc_logistic = roc_auc_score(results['y_test'], results['y_pred_tree_proba'], multi_class='ovo',
+                                                 average='weighted')
+                st.write(f'The roc_aur_score is {roc_auc_logistic}')
 
-        # fpr, tpr, thresholds = roc_curve(y, scores, pos_label=2)
+                # fpr, tpr, thresholds = roc_curve(y, scores, pos_label=2)
 
 
 if __name__ == '__main__':

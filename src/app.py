@@ -13,8 +13,7 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 
 def main():
     image_path = Path(dir_path)
-    # print(str(image_path.parent.absolute()))
-    # print(str(image_path.parent.absolute()) + '/report/assets/images/uparis.png')
+
     st.image(str(image_path.parent.absolute()) + '/report/assets/images/uparis.png')
 
     st.write('''
