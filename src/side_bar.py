@@ -88,6 +88,24 @@ def user_input_features():
             quantitative_var = st.sidebar.multiselect("Select quantitative variables", column_name)
             input_dict["quantitative_variables"] = quantitative_var
 
+
+            # choose input
+            st.sidebar.markdown(f"<h4 style='text-align: center; color: #0556FD;'>Select your feature(s)</h4>",
+                                unsafe_allow_html=True)
+
+            features = st.sidebar.multiselect("Select your Inputs", column_name)
+            input_dict['features'] = features
+
+            # choose output
+            st.sidebar.markdown(f"<h4 style='text-align: center; color: #0556FD;'>Select your output</h4>",
+                                unsafe_allow_html=True)
+
+            outputs = st.sidebar.selectbox("Select your output", column_name)
+            # st.sidebar.write(value)
+            # print(type(outputs))
+            input_dict['outputs'] = outputs
+
+
             st.sidebar.markdown(f"<h4 style='text-align: center; color: #0556FD;'>Select the model(s)</h4>",
                                 unsafe_allow_html=True)
             LR = st.sidebar.checkbox("Logistic regression")
@@ -109,21 +127,7 @@ def user_input_features():
             else:
                 input_dict['decision_tree'] = False
 
-            # choose input
-            st.sidebar.markdown(f"<h4 style='text-align: center; color: #0556FD;'>Select your feature(s)</h4>",
-                                unsafe_allow_html=True)
 
-            features = st.sidebar.multiselect("Select your Inputs", column_name)
-            input_dict['features'] = features
-
-            # choose output
-            st.sidebar.markdown(f"<h4 style='text-align: center; color: #0556FD;'>Select your output</h4>",
-                                unsafe_allow_html=True)
-
-            outputs = st.sidebar.selectbox("Select your output", column_name)
-            # st.sidebar.write(value)
-            # print(type(outputs))
-            input_dict['outputs'] = outputs
 
 
 
