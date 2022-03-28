@@ -13,9 +13,9 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 
 def main():
     image_path = Path(dir_path)
-    print(image_path.parent.absolute())
-    # print(image_path.parent.absolute() + 'report/assets/images/uparis.png')
-    # st.image('../report/assets/images/uparis.png')
+    # print(str(image_path.parent.absolute()))
+    # print(str(image_path.parent.absolute()) + '/report/assets/images/uparis.png')
+    st.image(str(image_path.parent.absolute()) + '/report/assets/images/uparis.png')
 
     st.write('''
     # Programmation web project
@@ -32,7 +32,7 @@ def main():
 
         result = models_select(cleaned_data)
 
-        # evaluation_step(result)
+        evaluation_step(result)
 
 
 if __name__ == '__main__':

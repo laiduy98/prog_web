@@ -1,11 +1,7 @@
 import streamlit as st
-import numpy as np
-import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
-from sklearn.metrics import accuracy_score
-from sklearn.model_selection import cross_val_score
 from sklearn.tree import DecisionTreeClassifier
 import side_bar
 import plotly.express as px
@@ -19,31 +15,29 @@ def models_select(cleaned_data):
     # Definition of X,y columns
     result_models = {}
     data = cleaned_data["data"]
-    #data = data.reset_index()
+    # data = data.reset_index()
     X = data[cleaned_data['features']]
     y = data[cleaned_data['outputs']]
 
     # Split the data
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
-    result_models['y_test']=y_test
-    if cleaned_data['logistic_regression'] == True:
+    test_size = st.number_input('Test size', min_value=0.1, max_value=1.0, value=0.3)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=42)
+    result_models['y_test'] = y_test
+    result_models['y_train'] = y_train
+    if cleaned_data['logistic_regression']:
+        st.write('### In the case of using logistic regression')
+        multi_class = st.radio('multi_class', ('ovr', 'multinomial'))
         # defining the model
-        regression = LogisticRegression(multi_class='ovr')
+        regression = LogisticRegression(multi_class=multi_class)
         # Fit the model
         regression.fit(X_train, y_train)
         # The prediction output
         y_pred_log = regression.predict(X_test)
-    
-        result_models['y'] = y
-        result_models['y_pred_logistic']=y_pred_log
+        y_pred_log_proba = regression.predict_proba(X_test)
 
-
-        st.markdown(f"<h3 style='text-align: center; color: #0556FD;'>Logistic Regression</h3>",
-            unsafe_allow_html=True)
-
-        st.markdown("###### - Prediction results from logistic regression")
-        st.write(result_models)
-
+        result_models['y_pred_logistic'] = y_pred_log
+        result_models['y_pred_logistic_proba'] = y_pred_log_proba
+        
         # --- Features Importances ---
         importance_lr = regression.coef_[0]
         st.markdown("###### - Importance Score for the logistic regression")
@@ -57,38 +51,35 @@ def models_select(cleaned_data):
 
         st.markdown("<hr/>", unsafe_allow_html=True)
 
-    if cleaned_data['svm'] == True:
+    if cleaned_data['svm']:
         svc=SVC() 
+        st.write('### In the case of using SVM')
+        kernel = st.radio('kernel', ('rbf', 'linear', 'poly', 'sigmoid', 'precomputed'))
+        decision_function_shape = st.radio('decision_function_shape', ('ovr', 'ovo'))
+
+        svc = SVC(kernel=kernel, decision_function_shape=decision_function_shape, probability=True)
         # fit classifier to training set
-        svc.fit(X_train,y_train)
+        svc.fit(X_train, y_train)
         # make predictions on test set
-        y_pred_svm=svc.predict(X_test)
+        y_pred_svm = svc.predict(X_test)
+        y_pred_svm_proba = svc.predict_proba(X_test)
 
-        result_models['y_pred_svm']=y_pred_svm
+        result_models['y_pred_svm'] = y_pred_svm
+        result_models['y_pred_svm_proba'] = y_pred_svm_proba
 
-        st.markdown(f"<h3 style='text-align: center; color: #0556FD;'>SVM</h3>",
-                    unsafe_allow_html=True)
-        st.markdown("###### - Prediction results from SVM")
-        st.write(result_models)
+    if cleaned_data['decision_tree']:
+        st.write('### In the case of using dicision tree')
 
-        # --- Features Importances ---
-         # impossible , Weights asigned to the features (coefficients in the primal problem).
-         # This is only available in the case of linear kernel.
-        #-------------------------------#
-        st.markdown("<hr/>", unsafe_allow_html=True)
+        criterion = st.radio('Choose your criterion', ('gini', 'entropy'))
 
-
-
-    if cleaned_data['decision_tree'] == True:
-        clf = DecisionTreeClassifier()
+        clf = DecisionTreeClassifier(criterion=criterion)
         clf.fit(X_train, y_train)
+
         y_pred_clf = clf.predict(X_test)
+        y_pred_clf_proba = clf.predict_proba(X_test)
+        
         result_models['y_pred_tree'] = y_pred_clf
 
-        st.markdown(f"<h3 style='text-align: center; color: #0556FD;'>Decision Tree</h3>",
-                    unsafe_allow_html=True)
-        st.markdown("###### - Prediction results from decision tree")
-        st.write(result_models)
 
         # ---- Features Importances ----
         importance_dt = clf.tree_.compute_feature_importances(normalize=False)
@@ -101,8 +92,10 @@ def models_select(cleaned_data):
         #-------------------------------#
         st.markdown("<hr/>", unsafe_allow_html=True)
     
-
-    return result_models
     
 
+        result_models['y_pred_tree'] = y_pred_clf
+        result_models['y_pred_tree_proba'] = y_pred_clf_proba
 
+    # st.write(result_models)
+    return result_models
