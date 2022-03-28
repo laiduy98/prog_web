@@ -48,6 +48,9 @@ def data_clean(side_bar_input):
         data_X[cleaned_input['outputs']] = data_y
 
         cleaned_data = data_X
+        cleaned_data.dropna(inplace=True)
+        cleaned_data[cleaned_input['outputs']].astype(int)
+        st.write('### Data preview')
         st.write(cleaned_data)
 
         cleaned_input['data'] = cleaned_data
