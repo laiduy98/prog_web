@@ -37,6 +37,10 @@ def models_select(cleaned_data):
         result_models['y'] = y
         result_models['y_pred_logistic']=y_pred_log
 
+
+        st.markdown(f"<h3 style='text-align: center; color: #0556FD;'>Logistic Regression</h3>",
+            unsafe_allow_html=True)
+
         st.markdown("###### - Prediction results from logistic regression")
         st.write(result_models)
 
@@ -51,6 +55,8 @@ def models_select(cleaned_data):
             st.plotly_chart(fig, use_container_width=True)
         #-------------------------------#
 
+        st.markdown("<hr/>", unsafe_allow_html=True)
+
     if cleaned_data['svm'] == True:
         svc=SVC() 
         # fit classifier to training set
@@ -60,6 +66,8 @@ def models_select(cleaned_data):
 
         result_models['y_pred_svm']=y_pred_svm
 
+        st.markdown(f"<h3 style='text-align: center; color: #0556FD;'>SVM</h3>",
+                    unsafe_allow_html=True)
         st.markdown("###### - Prediction results from SVM")
         st.write(result_models)
 
@@ -67,7 +75,7 @@ def models_select(cleaned_data):
          # impossible , Weights asigned to the features (coefficients in the primal problem).
          # This is only available in the case of linear kernel.
         #-------------------------------#
-
+        st.markdown("<hr/>", unsafe_allow_html=True)
 
 
 
@@ -77,6 +85,8 @@ def models_select(cleaned_data):
         y_pred_clf = clf.predict(X_test)
         result_models['y_pred_tree'] = y_pred_clf
 
+        st.markdown(f"<h3 style='text-align: center; color: #0556FD;'>Decision Tree</h3>",
+                    unsafe_allow_html=True)
         st.markdown("###### - Prediction results from decision tree")
         st.write(result_models)
 
@@ -89,6 +99,7 @@ def models_select(cleaned_data):
             fig = px.bar([x for x in range(len(importance_dt))], importance_dt)
             st.plotly_chart(fig, use_container_width=True)
         #-------------------------------#
+        st.markdown("<hr/>", unsafe_allow_html=True)
     
 
     return result_models
