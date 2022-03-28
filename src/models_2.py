@@ -3,6 +3,11 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
+import side_bar
+import plotly.express as px
+from matplotlib import pyplot as plt
+
+
 
 
 def models_select(cleaned_data):
@@ -32,8 +37,22 @@ def models_select(cleaned_data):
 
         result_models['y_pred_logistic'] = y_pred_log
         result_models['y_pred_logistic_proba'] = y_pred_log_proba
+        
+        # --- Features Importances ---
+        importance_lr = regression.coef_[0]
+        st.markdown("###### - Importance Score for the logistic regression")
+        for i,v in enumerate(importance_lr):
+            st.write('Feature: %0d, Score: %.5f' % (i,v))
+        #plot feature importance:
+        if st.checkbox("Show the bar chart for the feature importance scores from logistic regression:"):
+            fig = px.bar([x for x in range(len(importance_lr))], importance_lr)
+            st.plotly_chart(fig, use_container_width=True)
+        #-------------------------------#
+
+        st.markdown("<hr/>", unsafe_allow_html=True)
 
     if cleaned_data['svm']:
+        svc=SVC() 
         st.write('### In the case of using SVM')
         kernel = st.radio('kernel', ('rbf', 'linear', 'poly', 'sigmoid', 'precomputed'))
         decision_function_shape = st.radio('decision_function_shape', ('ovr', 'ovo'))
@@ -58,6 +77,22 @@ def models_select(cleaned_data):
 
         y_pred_clf = clf.predict(X_test)
         y_pred_clf_proba = clf.predict_proba(X_test)
+        
+        result_models['y_pred_tree'] = y_pred_clf
+
+
+        # ---- Features Importances ----
+        importance_dt = clf.tree_.compute_feature_importances(normalize=False)
+        st.markdown("###### - Importance Score for the Decision Tree")
+        for i,v in enumerate(importance_dt):
+            st.write('Feature: %0d, Score: %.5f' % (i,v))
+        if st.checkbox("Show the bar chart for the feature importance scores from decision tree:"):
+            fig = px.bar([x for x in range(len(importance_dt))], importance_dt)
+            st.plotly_chart(fig, use_container_width=True)
+        #-------------------------------#
+        st.markdown("<hr/>", unsafe_allow_html=True)
+    
+    
 
         result_models['y_pred_tree'] = y_pred_clf
         result_models['y_pred_tree_proba'] = y_pred_clf_proba

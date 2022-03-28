@@ -18,8 +18,7 @@ def main():
 
     st.write('''
     # Programmation web project
-    ##### This is a web application for visualising existing datasets, 
-    exploratory data analysis and training of different models.
+    ##### This is a web application for visualising existing datasets, exploratory data analysis and training of different models.
     ''')
 
     side_bar_input = user_input_features()

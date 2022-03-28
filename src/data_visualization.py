@@ -64,19 +64,26 @@ def data_visualization(side_bar_input):
 
         # percentage of pie chart:
         labels = ['Quantitative variables', 'Qualitative variables']
-        values = [len(numeric_data), len(categorical_data)]
+        if numeric_data and categorical_data is not None:
+            values = [len(numeric_data), len(categorical_data)]
+        else :
+            values = [1,1]
         fig = go.Figure(data=[go.Pie(labels=labels, values=values, hole=.3, pull=[0, 0, 0.2, 0])])
         # st.header('Percentage')
         st.plotly_chart(fig)
 
         # Summary
         if st.checkbox("Show Summary of Quantitative Variables"):
-            st.write(data.describe())
-            option = st.selectbox(
+            if numeric_data and categorical_data is not None:
+                st.write(data.describe())
+                option = st.selectbox(
                 "Which column do you want to visualise as a boxplot?",
                 numeric_data)
-            fig = px.box(data, y=option)
-            st.plotly_chart(fig, use_container_width=True)
+                fig = px.box(data, y=option)
+                st.plotly_chart(fig, use_container_width=True)
+            else:
+                st.markdown(f"<p style='color: red;font-size:13px; '>Please select the quantitative variables in the left sidebar</p>",
+                            unsafe_allow_html=True)
 
         """
        if st.checkbox("Show Summary of Qualitative Variables"):
